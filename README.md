@@ -1,0 +1,2 @@
+# golos
+Contract for golos
