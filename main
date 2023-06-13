@@ -1,0 +1,25 @@
+pragma solidity ^0.8.0;
+
+contract Voting {
+   mapping (address => bool) private voters;
+   mapping (bytes32 => uint256) private votes;
+
+   string public candidateName;
+
+   constructor (string memory _candidateName) {
+      candidateName = _candidateName;
+   }
+
+   function vote(bytes32 _vote) public {
+      require(!voters[msg.sender], "Already voted");
+      voters[msg.sender] = true;
+      votes[_vote] += 1;
+      emit Vote(msg.sender, _vote);
+   }
+
+   function getVotes(bytes32 _vote) public view returns (uint256) {
+      return votes[_vote];
+   }
+
+   event Vote(address indexed voter, bytes32 indexed vote);
+}
